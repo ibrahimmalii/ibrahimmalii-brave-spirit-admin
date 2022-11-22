@@ -1,0 +1,98 @@
+html {
+    scroll-behavior: smooth;
+}
+
+img{
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+}
+
+.separator{
+    border-top: 2px solid #1e88e5;
+    width: 50%;
+    margin: 40px auto;
+}
+
+img {
+    display: block;
+    vertical-align: middle;
+}
+.container-group {
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.hidden {
+    display: none;
+}
+.profile-image {
+    width: 100%;
+    object-fit: cover;
+    height: 10rem;
+    display: block;
+    vertical-align: middle;
+    border: 2px solid #edcdcd;
+    margin: 20px auto;
+}
+.brows-label {
+    color: rgba(160,174,192, 1);
+    font-size: 12px;
+    width: 12rem;
+    margin: auto;
+}
+.brows-button {
+    justify-content: space-between;
+    cursor: pointer;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-align: left;
+    color: rgba(113,128,150,1);
+    font-weight: 500;
+    border: 1px solid #edcdcd;
+}
+.profile-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: -0.25rem;
+    margin-right: 0.25rem;
+}
+
+.dictionary {
+    width: 40%;
+    margin-bottom: 33px;
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.dictionary a{
+    display: block;
+}
+
+h2{
+    padding-top:  38px;
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+}
+.show-scrollTop {
+    opacity: .5;
+    transition: all .2s ease-in-out;
+}
+
+html{
+    scroll-behavior: smooth !important;
+}

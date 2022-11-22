@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>{{isUpdated ? 'Update' : 'Add'}} User</h2>
+<mat-dialog-content class="mat-typography" *ngIf="isLoaded">
+    <div *ngIf="isSubmittedError" class="mx-auto w-50 alert alert-primary alert-dismissible fade show" role="alert">
+        <div class="text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                 class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </svg>
+            {{errorMsg}}
+        </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+        <div class="field-container d-flex">
+            <mat-form-field><input formControlName="firstname" matInput placeholder="First Name"> </mat-form-field>
+            <mat-form-field><input formControlName="lastname" matInput placeholder="Last Name"> </mat-form-field>
+        </div>
+        <mat-form-field><input formControlName="email" matInput placeholder="Email"> </mat-form-field>
+        <mat-form-field><input formControlName="phone" matInput placeholder="Phone"> </mat-form-field>
+        <mat-form-field *ngIf="!isUpdated"><input formControlName="password" matInput placeholder="Password"> </mat-form-field>
+
+        <mat-form-field color="accent" *ngIf="!isUpdated">
+            <mat-label>Birth Date</mat-label>
+            <input matInput [matDatepicker]="picker2" formControlName="birthdate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field *ngIf="!isUpdated">
+            <mat-label class="fs-6 mb-2">Country</mat-label>
+            <select matNativeControl formControlName="country">
+                <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+            </select>
+        </mat-form-field>
+        <mat-radio-group aria-label="Select an option" formControlName="gender" *ngIf="!isUpdated">
+            <mat-label class="fs-6 mb-2">Gender</mat-label><br>
+            <mat-radio-button value="0">Male</mat-radio-button>
+            <mat-radio-button value="1" class="ms-2">Female</mat-radio-button>
+        </mat-radio-group>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" *ngIf="isLoaded">
+    <button mat-stroked-button color="warn" (click)="form.reset()">Reset</button>
+    <button (click)="submitForm()" color="primary" mat-stroked-button cdkFocusInitial>{{isUpdated ? 'Update' : 'Add'}}</button>
+<!--    <button (click)="submitForm()" color="primary" mat-stroked-button [mat-dialog-close]="true" cdkFocusInitial>Add</button>-->
+</mat-dialog-actions>
+
+<mat-card *ngIf="!isLoaded && isUpdated" >
+    <mat-card-content >
+        <mat-spinner class="mx-auto"></mat-spinner>
+    </mat-card-content>
+</mat-card>

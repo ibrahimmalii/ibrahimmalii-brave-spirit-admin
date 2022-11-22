@@ -1,0 +1,39 @@
+<ejs-grid *ngIf="modifiedData"
+          #grid id='Grid'
+          (toolbarClick)='toolbarClick($event)'
+          [dataSource]='modifiedData'
+          [allowPaging]="true"
+          [pageSettings]='pageSettings'
+          [allowSorting]="true"
+          [allowFiltering]="true"
+          [allowGrouping]="true"
+          [toolbar]='toolbarOptions'
+>
+    <e-columns>
+        <e-column field='firstname' headerText='First Name' textAlign='Left' width=90></e-column>
+        <e-column field='lastname' headerText='Last Name' textAlign='Left' width=90></e-column>
+        <e-column field='email' headerText='Email' width=120></e-column>
+        <e-column field='phone' headerText='Phone' textAlign='Left' width=90></e-column>
+        <e-column field='gender' headerText='Gender' textAlign='Left'  width=90></e-column>
+        <e-column field='active' headerText='Is Active' textAlign='Left' width=90>
+            <ng-template #template let-data>
+                <mat-card-content>
+                    <mat-slide-toggle [checked]="data.active" (change)="getActivationStatues($event)"></mat-slide-toggle>
+                </mat-card-content>
+            </ng-template>
+        </e-column>
+        <e-column headerText='Actions' textAlign='Left' width=90>
+            <ng-template #template let-data>
+                <div class="image">
+                    <img src="https://ej2.syncfusion.com/angular/demos/src/grid/images/d.png"/>
+                </div>
+            </ng-template>
+        </e-column>
+    </e-columns>
+</ejs-grid>
+
+<mat-card *ngIf="!modifiedData" >
+    <mat-card-content >
+        <mat-spinner class="mx-auto"></mat-spinner>
+    </mat-card-content>
+</mat-card>

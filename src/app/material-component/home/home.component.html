@@ -1,0 +1,1354 @@
+<div class="mainWrapper" *ngIf="isLoaded">
+
+    <div class="dictionary">
+        <p class="fw-bold">Sections Dictionary</p>
+        <a  *ngFor="let prop of homeSectionsNames" [href]="'home#' + prop">{{prop}}</a>
+    </div>
+    <button class="btn btn-info" (click)="resetDefault()">Reset Default</button>
+
+    <h2 id="banner">Banner</h2>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Banner Section </mat-panel-title>
+                <mat-panel-description> Update Banner details </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+                <mat-tab label="Arabic">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['banner']['ar']['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Banner img </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img  class="profile-image" src="{{sectionImagesUrls['banner']}}"  alt=""/>
+                                        </div>
+                                        <label (click)="bannerFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo" #bannerFileInput accept="image/*"
+                                               (change)="changeImage($event, 'banner')" class="hidden" type="file">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'banner')" [content]="homeObj['banner']['ar']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table></div>
+                </mat-tab>
+                <mat-tab label="English">
+                    <div class="p-20">
+                        <table class="table-section w-100" >
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['banner']['en']['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'banner', 'en')" [content]="homeObj['banner']['en']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="separator"></div>
+
+    <h2 id="advices">Advices</h2>
+    <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+        <mat-tab label="Arabic">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let arAdvice of homeObj['advices']['ar']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Advice {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update advice details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['advices']['ar'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Advice image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['advices'][index]}}" />
+                                        </div>
+                                        <label (click)="advicesFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #advicesFileInput accept="image/*"
+                                               (change)="changeImage($event, 'advices', true, index)" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('advices', +index)"
+                                            [disabled]="homeObj['advices']['ar'].length < 2">Remove Advice</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="English">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let enAdvice of homeObj['advices']['en']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Advice {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Type advice details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['advices']['en'][index]['name']">
+                                    </ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('advices', +index, 'en')"
+                                            [disabled]="homeObj['advices']['en'].length < 2">Remove Advice</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <button mat-raised-button color="primary" (click)="addNewSection('advices')">Add New Advice</button>
+
+    <div class="separator"></div>
+
+    <h2 id="problem">Problems</h2>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Problems Section </mat-panel-title>
+                <mat-panel-description> Update problem details </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+                <mat-tab label="Arabic">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['problem']['ar']['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Problem img </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img  class="profile-image" src="{{sectionImagesUrls['problem']}}" />
+                                        </div>
+                                        <label (click)="problemFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input  name="photo"  #problemFileInput accept="image/*"
+                                                (change)="changeImage($event, 'problem')" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'problem')" [content]="homeObj['problem']['ar']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+                <mat-tab label="English">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['problem']['en']['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'problem', 'en')" [content]="homeObj['problem']['en']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="separator"></div>
+
+    <h2 id="solutions">Solutions</h2>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Solution Section </mat-panel-title>
+                <mat-panel-description> Update solution details </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+                <mat-tab label="Arabic">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['solutions']['ar']['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <mat-accordion class="example-headers-align" *ngFor="let arDescription of homeObj['solutions']['ar']['descriptions']; index as index">
+                                        <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title> Description {{index + 1}} </mat-panel-title>
+                                                <mat-panel-description> Update description details </mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                            <table class="table-section w-100">
+                                                <tr>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                                           type="Text" [(ngModel)]="homeObj['solutions']['ar']['descriptions'][index]['description']"></ejs-inplaceeditor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Description image </h3></td>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <div class="text-center">
+                                                            <div class="text-center">
+                                                                <img class="profile-image" src="{{sectionImagesUrls['solutions'][index]}}" />
+                                                            </div>
+                                                            <label (click)="solutionsFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                                                <i class="fa-light fa-camera"></i>
+                                                                Change Photo
+                                                            </label>
+                                                            <input name="photo"  #solutionsFileInput accept="image/*"
+                                                                   (change)="changeImage($event, 'solutions', true, index)" class="hidden" type="file" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <button mat-raised-button color="warn"
+                                                                (click)="removeSection('solutions', +index, 'ar', 'descriptions')"
+                                                                [disabled]="homeObj['solutions']['ar']['descriptions'].length < 2">Remove Description</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+                <mat-tab label="English">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['solutions']['en']['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <mat-accordion class="example-headers-align" *ngFor="let enDescription of homeObj['solutions']['en']['descriptions']; index as index">
+                                        <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title> Description {{index + 1}} </mat-panel-title>
+                                                <mat-panel-description> Update description details </mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                            <table class="table-section w-100">
+                                                <tr>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                                           type="Text" [(ngModel)]="homeObj['solutions']['en']['descriptions'][index]['description']"></ejs-inplaceeditor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <button mat-raised-button color="warn"
+                                                                (click)="removeSection('solutions', +index, 'en', 'descriptions')"
+                                                                [disabled]="homeObj['solutions']['en']['descriptions'].length < 2">Remove Description</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <button class="mt-3" mat-raised-button color="primary" (click)="addNewSection('solutions', 'descriptions')">
+        Add New Solution Description
+    </button>
+
+    <div class="separator"></div>
+
+    <h2 id="companies">Companies</h2>
+    <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+        <mat-tab label="Arabic">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let arCompany of homeObj['companies']['ar']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Company {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update company details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['companies']['ar'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Company image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['companies'][index]}}" />
+                                        </div>
+                                        <label (click)="companiesFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #companiesFileInput accept="image/*"
+                                               (change)="changeImage($event, 'companies', true, index)" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('companies', +index)"
+                                            [disabled]="homeObj['companies']['ar'].length < 2">Remove Company</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="English">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let enCompany of homeObj['companies']['en']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Company {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update company details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['companies']['en'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('companies', +index, 'en')"
+                                            [disabled]="homeObj['companies']['en'].length < 2">Remove Company</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <button mat-raised-button color="primary" (click)="addNewSection('companies')">Add New Company</button>
+
+    <div class="separator"></div>
+
+    <h2 id="recommendations">Recommendations</h2>
+    <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+        <mat-tab label="Arabic">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let arRecommendation of homeObj['recommendations']['ar']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Recommendation {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update recommendation details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['recommendations']['ar'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Recommendation image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['recommendations'][index]}}" />
+                                        </div>
+                                        <label (click)="recommendationsFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #recommendationsFileInput accept="image/*"
+                                               (change)="changeImage($event, 'recommendations', true, index)" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'recommendations', 'ar', 'saying', true, index)" [content]="homeObj['recommendations']['ar'][index]['saying']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('recommendations', +index)"
+                                            [disabled]="homeObj['recommendations']['ar'].length < 2">Remove Recommendation</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="English">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let enRecommendation of homeObj['recommendations']['en']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Recommendation {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update recommendation details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['recommendations']['en'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Saying </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'recommendations', 'en', 'saying', true, index)" [content]="homeObj['recommendations']['en'][index]['saying']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('recommendations', +index, 'en')"
+                                            [disabled]="homeObj['recommendations']['en'].length < 2">Remove Recommendation</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <button mat-raised-button color="primary" (click)="addNewSection('recommendations')">Add New Recommendation</button>
+
+    <div class="separator"></div>
+
+    <h2 id="about">About</h2>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title> About Section </mat-panel-title>
+                <mat-panel-description> Update About details </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+                <mat-tab label="Arabic">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> About image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['about']}}" />
+                                        </div>
+                                        <label (click)="aboutFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #aboutFileInput accept="image/*"
+                                               (change)="changeImage($event, 'about')" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr >
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'about')" [content]="homeObj['about']['ar']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr class="mt-5">
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Zipped Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'about', 'ar', 'zipped_description')" [content]="homeObj['about']['ar']['zipped_description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table></div>
+                </mat-tab>
+                <mat-tab label="English">
+                    <div class="p-20">
+                        <table class="table-section w-100" >
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'about', 'en')" [content]="homeObj['about']['en']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Zipped Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'about', 'en', 'zipped_description')" [content]="homeObj['about']['en']['zipped_description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="separator"></div>
+
+    <h2 id="steps">Steps</h2>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Steps Section </mat-panel-title>
+                <mat-panel-description> Update step details </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+                <mat-tab label="Arabic">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['steps']['ar']['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <mat-accordion class="example-headers-align" *ngFor="let arStep of homeObj['steps']['ar']['descriptions']; index as index">
+                                        <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title> Description {{index + 1}} </mat-panel-title>
+                                                <mat-panel-description> Update description details </mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                            <table class="table-section w-100">
+                                                <tr>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                                           type="Text" [(ngModel)]="homeObj['steps']['ar']['descriptions'][index]['description']"></ejs-inplaceeditor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Step image </h3></td>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <div class="text-center">
+                                                            <div class="text-center">
+                                                                <img class="profile-image" src="{{sectionImagesUrls['steps'][index]}}" />
+                                                            </div>
+                                                            <label (click)="stepsFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                                                <i class="fa-light fa-camera"></i>
+                                                                Change Photo
+                                                            </label>
+                                                            <input name="photo"  #stepsFileInput accept="image/*"
+                                                                   (change)="changeImage($event, 'steps', true, index)" class="hidden" type="file" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <button mat-raised-button color="warn"
+                                                                (click)="removeSection('steps', +index, 'ar', 'descriptions')"
+                                                                [disabled]="homeObj['steps']['ar']['descriptions'].length < 2">Remove Description</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+                <mat-tab label="English">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['steps']['en']['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <mat-accordion class="example-headers-align" *ngFor="let enStep of homeObj['steps']['en']['descriptions']; index as index">
+                                        <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title> Description {{index + 1}} </mat-panel-title>
+                                                <mat-panel-description> Update description details </mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                            <table class="table-section w-100">
+                                                <tr>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                                    <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                                           type="Text" [(ngModel)]="homeObj['steps']['en']['descriptions'][index]['description']"></ejs-inplaceeditor>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <button mat-raised-button color="warn"
+                                                                (click)="removeSection('steps', +index, 'en', 'descriptions')"
+                                                                [disabled]="homeObj['steps']['en']['descriptions'].length < 2">Remove Description</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <button class="mt-3" mat-raised-button color="primary" (click)="addNewSection('steps', 'descriptions')">
+        Add New Step Description
+    </button>
+
+    <div class="separator"></div>
+
+    <h2 id="guaranties">Guaranties</h2>
+    <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+        <mat-tab label="Arabic">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let arGuarantee of homeObj['guaranties']['ar']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Guarantee {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update guarantee details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['guaranties']['ar'][index]['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Guarantee image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['guaranties'][index]}}" />
+                                        </div>
+                                        <label (click)="guarantiesFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #guarantiesFileInput accept="image/*"
+                                               (change)="changeImage($event, 'guaranties', true, index)" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'guaranties', 'ar', 'description', true, index)" [content]="homeObj['guaranties']['ar'][index]['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('guaranties', +index)"
+                                            [disabled]="homeObj['guaranties']['ar'].length < 2">Remove Guarantee</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="English">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let enGuarantee of homeObj['guaranties']['en']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Guarantee {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update guarantee details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['guaranties']['en'][index]['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'guaranties', 'en', 'description', true, index)" [content]="homeObj['guaranties']['en'][index]['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('guaranties', +index, 'en')"
+                                            [disabled]="homeObj['guaranties']['en'].length < 2">Remove Guarantee</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <button mat-raised-button color="primary" (click)="addNewSection('guaranties')">Add New Guarantee</button>
+
+    <div class="separator"></div>
+
+    <h2 id="testimonials">Testimonials</h2>
+    <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+        <mat-tab label="Arabic">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let arTestimonials of homeObj['testimonials']['ar']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Testimonial {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update testimonials details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['testimonials']['ar'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Testimonial image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['testimonials'][index]}}" />
+                                        </div>
+                                        <label (click)="testimonialsFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #testimonialsFileInput accept="image/*"
+                                               (change)="changeImage($event, 'testimonials', true, index)" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'testimonials', 'ar', 'saying', true, index)" [content]="homeObj['testimonials']['ar'][index]['saying']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('testimonials', +index)"
+                                            [disabled]="homeObj['testimonials']['ar'].length < 2">Remove Testimonial</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="English">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let enTestimonials of homeObj['testimonials']['en']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Testimonial {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update testimonials details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['testimonials']['en'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'testimonials', 'en', 'saying', true, index)" [content]="homeObj['testimonials']['en'][index]['saying']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('testimonials', +index, 'en')"
+                                            [disabled]="homeObj['testimonials']['en'].length < 2">Remove Testimonial</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <button mat-raised-button color="primary" (click)="addNewSection('testimonials')">Add New Testimonial</button>
+
+    <div class="separator"></div>
+
+    <h2 id="paid">Paid</h2>
+    <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+        <mat-tab label="Arabic">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let arPaid of homeObj['paid']['ar']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Paid {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update paid details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['paid']['ar'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Price </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['paid']['ar'][index]['price']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Link </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['paid']['ar'][index]['link']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Paid image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['paid'][index]}}" />
+                                        </div>
+                                        <label (click)="paidFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #paidFileInput accept="image/*"
+                                               (change)="changeImage($event, 'paid', true, index)" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'paid', 'ar', 'description', true, index)" [content]="homeObj['paid']['ar'][index]['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('paid', +index)"
+                                            [disabled]="homeObj['paid']['ar'].length < 2">Remove Paid</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="English">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let enPaid of homeObj['paid']['en']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Paid {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update paid details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['paid']['en'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Price </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['paid']['en'][index]['price']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Link </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['paid']['en'][index]['link']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'paid', 'en', 'description', true, index)" [content]="homeObj['paid']['en'][index]['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('paid', +index, 'en')"
+                                            [disabled]="homeObj['paid']['en'].length < 2">Remove Paid</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <button mat-raised-button color="primary" (click)="addNewSection('paid')">Add New Paid</button>
+
+    <div class="separator"></div>
+
+    <h2 id="contact">Contact</h2>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Contact Section </mat-panel-title>
+                <mat-panel-description> Update Contact details </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+                <mat-tab label="Arabic">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['contact']['ar']['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Contact image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['contact']}}" />
+                                        </div>
+                                        <label (click)="contactFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #contactFileInput accept="image/*"
+                                               (change)="changeImage($event, 'contact')" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'contact')" [content]="homeObj['contact']['ar']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table></div>
+                </mat-tab>
+                <mat-tab label="English">
+                    <div class="p-20">
+                        <table class="table-section w-100" >
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['contact']['en']['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr>
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'contact', 'en')" [content]="homeObj['contact']['en']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="separator"></div>
+
+    <h2 id="categories">Categories</h2>
+    <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+        <mat-tab label="Arabic">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let arCategory of homeObj['categories']['ar']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Category {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update category details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['categories']['ar'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Category image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['categories'][index]}}" />
+                                        </div>
+                                        <label (click)="categoriesFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #categoriesFileInput accept="image/*"
+                                               (change)="changeImage($event, 'categories', true, index)" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('categories', +index)"
+                                            [disabled]="homeObj['categories']['ar'].length < 2">Remove Category</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="English">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let enCategory of homeObj['categories']['en']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Category {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update category details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Name </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['categories']['en'][index]['name']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('categories', +index, 'en')"
+                                            [disabled]="homeObj['categories']['en'].length < 2">Remove Category</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <button mat-raised-button color="primary" (click)="addNewSection('categories')">Add New Category</button>
+
+    <div class="separator"></div>
+
+    <h2 id="book">Book</h2>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Book Section </mat-panel-title>
+                <mat-panel-description> Update Book details </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+                <mat-tab label="Arabic">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Book Link </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['book']['ar']['file']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Book image </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="text-center">
+                                        <div class="text-center">
+                                            <img class="profile-image" src="{{sectionImagesUrls['book']}}" />
+                                        </div>
+                                        <label (click)="bookFileInput.click()" type="button" class="brows-button cursor-pointer bg-white  font-medium">
+                                            <i class="fa-light fa-camera"></i>
+                                            Change Photo
+                                        </label>
+                                        <input name="photo"  #bookFileInput accept="image/*"
+                                               (change)="changeImage($event, 'book')" class="hidden" type="file" >
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr >
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'book')" [content]="homeObj['book']['ar']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+                <mat-tab label="English">
+                    <div class="p-20">
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Book Link </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['book']['en']['file']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title" colspan="2"><h3> Description </h3></td>
+                            </tr>
+                            <tr >
+                                <td class="col" colspan="2">
+                                    <app-rich-text-editor (outputContent)="changeDescriptionOrZippedDescription($event, 'book')" [content]="homeObj['book']['en']['description']"></app-rich-text-editor>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="separator"></div>
+
+    <h2 id="notes">Notes</h2>
+    <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+        <mat-tab label="Arabic">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let arNote of homeObj['notes']['ar']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Note {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update note details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['notes']['ar'][index]['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('notes', +index)"
+                                            [disabled]="homeObj['notes']['ar'].length < 2">Remove Note</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="English">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let enNote of homeObj['notes']['en']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Note {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update note details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Title </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['notes']['en'][index]['title']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button mat-raised-button color="warn"
+                                            (click)="removeSection('notes', +index, 'en')"
+                                            [disabled]="homeObj['notes']['en'].length < 2">Remove Note</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <button mat-raised-button color="primary" (click)="addNewSection('notes')">Add New Note</button>
+
+    <div class="separator"></div>
+
+    <h2 id="faqs">Faqs</h2>
+    <mat-tab-group mat-align-tabs="center" *ngIf="isLoaded">
+        <mat-tab label="Arabic">
+            <div class="p-20">
+                <mat-accordion class="example-headers-align" *ngFor="let arFaqs of homeObj['faqs']; index as index">
+                    <mat-expansion-panel [expanded]="step === index" (opened)="setStep(0)" hideToggle="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Faqs {{index + 1}} </mat-panel-title>
+                            <mat-panel-description> Update faqs details </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="table-section w-100">
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Question </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['faqs'][index]['questions']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-title"><h3> Answer </h3></td>
+                                <td class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ejs-inplaceeditor mode="Inline" [popupSettings]="settings" [model]="overviewModel"
+                                                       type="Text" [(ngModel)]="homeObj['faqs'][index]['answers']"></ejs-inplaceeditor>
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <div class="separator"></div>
+
+    <!--Save the home-->
+    <button mat-raised-button color="accent" (click)="saveHome()">Click to save</button>
+
+    <!--Scroll to top-->
+    <div class="scroll-to-top show-scrollTop">
+        <button mat-icon-button color="primary" (click)="scrollToTop()">
+            <mat-icon aria-label="Example icon-button with a favorite icon" >favorite</mat-icon>
+        </button>
+    </div>
+</div>
+
+<div *ngIf="!isLoaded" class="text-center">
+    <mat-spinner class="mx-auto"></mat-spinner>
+</div>

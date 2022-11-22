@@ -1,0 +1,45 @@
+<app-module-title
+        name="Courses"
+        btnTitle="Course"
+        (addNew)="addNewCourse()"
+></app-module-title>
+<ejs-grid *ngIf="isLoaded"
+          #grid id='Grid'
+          #gridEleRef
+          (toolbarClick)='toolbarClick($event)'
+          [dataSource]='modifiedCourses'
+          [allowPaging]="true"
+          [pageSettings]='pageSettings'
+          [allowSorting]="true"
+          [allowFiltering]="true"
+          [allowGrouping]="true"
+          [toolbar]='toolbarOptions'
+          [allowExcelExport]='true'
+          [allowPdfExport]='true'
+>
+    <e-columns>
+        <e-column field='name.ar' headerText='Arabic Name' textAlign='Left' width=90></e-column>
+        <e-column field='name.en' headerText='English Name' textAlign='Left' width=90></e-column>
+        <e-column field='published' headerText='Is Published' textAlign='Left' width=90>
+            <ng-template #template let-data>
+                <mat-card-content>
+                    <mat-slide-toggle [checked]="data['published']" (change)="changePublishStatus(data['_id'])"></mat-slide-toggle>
+                </mat-card-content>
+            </ng-template>
+        </e-column>
+        <e-column headerText='Actions' textAlign='Center' width=90>
+            <ng-template #template let-data>
+                <mat-card-content>
+                    <button mat-stroked-button color="primary" (click)="updateCourse(data['_id'])">Update</button>
+                    <button mat-stroked-button color="warn" class="me-2">Delete</button>
+                </mat-card-content>
+            </ng-template>
+        </e-column>
+    </e-columns>
+</ejs-grid>
+
+<mat-card *ngIf="!isLoaded" >
+    <mat-card-content >
+        <mat-spinner class="mx-auto"></mat-spinner>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,12 @@
+img{
+    width: 75%;
+    height: 200px;
+    border: 1px solid black;
+}
+
+.imgMultiple{
+    width: 100%;
+    height: 250px;
+    border: 1px solid black;
+    border-radius: 5px;
+}

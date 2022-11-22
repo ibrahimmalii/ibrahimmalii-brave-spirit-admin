@@ -1,0 +1,5 @@
+<ejs-richtexteditor #typeRTE id='defaultRTE' (change)="getFormattedContent()">
+    <ng-template  #valueTemplate >
+        <div [innerHTML]="content"></div>
+    </ng-template>
+</ejs-richtexteditor>
