@@ -24,6 +24,10 @@ export class CourseService {
     return this._http.get(`/${this.modelName}/deleted`)
   }
 
+  deleteCourse(id: string) {
+    return this._http.delete(`/${this.modelName}/`, id)
+  }
+
   getCourseCover(id: string, fileName: string)
   {
     return this._http.get(`/${this.modelName}/cover/${id}/${fileName}`)
@@ -61,7 +65,39 @@ export class CourseService {
 
   add(body: any, httpConfig?: object)
   {
-    return this._http.post(`/${this.modelName}`, body, {headers: {...httpConfig}});
+    const course = structuredClone(body);
+    const data = new FormData();
+    if(course.cover){
+      data.append('cover', course.cover, course.cover?.name);
+    }
+    course.images.forEach((file: any, index: number) => { data.append(`image${index + 1}`, file, file?.name); });
+    course.chapters.forEach((chapter: any, chapterIndex: number) => {
+      chapter.files.forEach((file: any, fileIndex: number) => {
+        file.binaryAttachments.forEach((attachment: any, attachIndex: number) => {
+          data.append(`attachment${chapterIndex}${fileIndex}${attachIndex}`, attachment, attachment?.name)
+        });
+        delete file.binaryAttachments;
+      });
+    });
+
+    const courseImagesNames = course.images.map((item: any) => item.name);
+
+    const newCourse = {
+      cover : course?.cover?.name,
+      name : course.name,
+      description : course.description,
+      zipped_description : course.zipped_description,
+      price : course.price,
+      discount : course.discount,
+      published : course.published,
+      chapters : course.chapters,
+      images : courseImagesNames
+    };
+    const courseFile = new Blob([JSON.stringify(newCourse)], {
+      type: 'application/json',
+    });
+    data.append('data', courseFile);
+    return this._http.post(`/${this.modelName}`, data, {headers: {...httpConfig}});
   }
 
   patch(id: string, body: any)
@@ -73,5 +109,6 @@ export class CourseService {
   {
     return this._http.patch(`/${this.modelName}/publish/${id}`, '');
   };
+
 
 }

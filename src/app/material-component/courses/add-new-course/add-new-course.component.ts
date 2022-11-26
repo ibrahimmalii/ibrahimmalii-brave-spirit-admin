@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Chapter} from "../../../models/chapter";
 import {PopupSettingsModel} from "@syncfusion/ej2-inplace-editor/src/inplace-editor/base/models-model";
 import {TextBoxModel} from "@syncfusion/ej2-inputs";
+import {CourseService} from "../../../services/course.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-new-course',
@@ -12,7 +14,7 @@ import {TextBoxModel} from "@syncfusion/ej2-inputs";
 })
 export class AddNewCourseComponent implements OnInit {
 
-  originalChapter: Chapter = new Chapter({ar: '', en: ''}, {ar: '', en: ''}, [{title: {ar: '', en: ''}, link: '', file: '', attachments: [], attachmentsName: []}]);
+  originalChapter: Chapter = new Chapter({ar: '', en: ''}, {ar: '', en: ''}, [{title: {ar: '', en: ''}, link: '', file: '', attachments: [], binaryAttachments: []}]);
   courseObj: Course = new Course(
       {ar: '', en: ''},
       {ar: '', en: ''},
@@ -21,7 +23,7 @@ export class AddNewCourseComponent implements OnInit {
       [],
       {euro: 0, dzd: 0},
       0,
-      [new Chapter({ar: '', en: ''}, {ar: '', en: ''}, [{title: {ar: '', en: ''}, link: '', file: '', attachments: [], attachmentsName: []}])],
+      [new Chapter({ar: '', en: ''}, {ar: '', en: ''}, [{title: {ar: '', en: ''}, link: '', file: '', attachments: [], binaryAttachments: []}])],
       false
   );
 
@@ -29,7 +31,7 @@ export class AddNewCourseComponent implements OnInit {
     title: 'Enter title'
   };
 
-  isLinearvarient = true;
+  isValidateEnable = true;
   courseNameForm: FormGroup=Object.create(null);
   courseDescriptionForm: FormGroup=Object.create(null);
   courseZippedDescriptionForm: FormGroup=Object.create(null);
@@ -45,29 +47,15 @@ export class AddNewCourseComponent implements OnInit {
     return this.myForm.controls;
   }
 
+  courseImagesForPreview: string[] = [];
   onFileChange(event:any) {
     if (event.target.files && event.target.files[0]) {
       let filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
         let reader = new FileReader();
-        reader.onload = (event:any) => {
-          this.courseObj.images.push(event.target.result);
-        }
-        reader.readAsDataURL(event.target.files[i]);
-      }
-    }
-  }
-
-  onFileChangeOnChapterAttachments(event:any, chapterIndex: number, fileIndex: number) {
-    if (event.target.files && event.target.files[0]) {
-      let filesAmount = event.target.files.length;
-      console.log('filesAmount', filesAmount);
-      for (let i = 0; i < filesAmount; i++) {
-        let reader = new FileReader();
         reader.onload = (subEvent:any) => {
-          console.log('subEvent', event.target.files[i]);
-          this.courseObj.chapters[chapterIndex].files[fileIndex].attachments.push(subEvent.target.result);
-          this.courseObj.chapters[chapterIndex].files[fileIndex].attachmentsName.push(event.target.files[i].name);
+          this.courseImagesForPreview.push(subEvent.target.result);
+          this.courseObj.images.push(event.target.files[i]);
         }
         reader.readAsDataURL(event.target.files[i]);
       }
@@ -75,11 +63,12 @@ export class AddNewCourseComponent implements OnInit {
   }
 
   deleteCourseImage(index: number) {
+    this.courseImagesForPreview.splice(index, 1);
     this.courseObj.images.splice(index, 1);
   }
 
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private _courseService: CourseService, private _router: Router) { }
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
@@ -106,6 +95,8 @@ export class AddNewCourseComponent implements OnInit {
     })
   }
 
+  courseCoverForPreview: any;
+  courseNameForPreview: any;
   changeImage(event:any,  isChapter: boolean = false, chapterIndex:number = 0, fileIndex: number = 0) {
     let reader = new FileReader();
     let file = event.target.files[0];
@@ -113,10 +104,12 @@ export class AddNewCourseComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = () => {
         if(!isChapter) {
-          this.courseObj['cover'] = reader.result;
+          this.courseCoverForPreview = reader.result;
+          this.courseNameForPreview = file.name;
+          this.courseObj['cover'] = file;
         } else {
           if (typeof reader.result === "string") {
-            this.courseObj['chapters'][chapterIndex]['files'][fileIndex]['file'] = reader.result;
+            this.courseObj['chapters'][chapterIndex]['files'][fileIndex]['file'] = file.name;
           }
         }
       }
@@ -124,8 +117,18 @@ export class AddNewCourseComponent implements OnInit {
     }
   }
 
-  log() {
-    console.log(this.courseObj);
+  onFileChangeOnChapterAttachments(event:any, chapterIndex: number, fileIndex: number) {
+    if (event.target.files && event.target.files[0]) {
+      let filesAmount = event.target.files.length;
+      for (let i = 0; i < filesAmount; i++) {
+        let reader = new FileReader();
+        reader.onload = (subEvent:any) => {
+          this.courseObj.chapters[chapterIndex].files[fileIndex].binaryAttachments.push(event.target.files[i]);
+          this.courseObj.chapters[chapterIndex].files[fileIndex].attachments.push(event.target.files[i].name);
+        }
+        reader.readAsDataURL(event.target.files[i]);
+      }
+    }
   }
 
   submit() {
@@ -138,15 +141,26 @@ export class AddNewCourseComponent implements OnInit {
   }
 
   addNewCourse() {
-
-  }
-
-  submitChapter() {
-
+    this._courseService.add(this.courseObj).subscribe((res) => {
+      this.successOrErrorMsg = 'Course added successfully';
+      this.isFormSubmitted = true;
+      setTimeout(() => {
+        this.hideError();
+        this._router.navigateByUrl('/courses');
+      }, 3000);
+    }, (err) => {
+      this.successOrErrorMsg = err.error.error;
+      this.isFormSubmitted = true;
+      setTimeout(() => {
+        this.hideError();
+      }, 3000);
+    });
   }
 
   step = 0;
   fileStep = 0;
+  isFormSubmitted: boolean = false;
+  successOrErrorMsg: string = '';
 
   setStep(index: number) {
     this.step = index;
@@ -166,7 +180,7 @@ export class AddNewCourseComponent implements OnInit {
 
   deleteChapterAttachment(chapterIndex: number, fileIndex: number, attachmentIndex: number) {
     this.courseObj.chapters[chapterIndex].files[fileIndex].attachments.splice(attachmentIndex, 1);
-    this.courseObj.chapters[chapterIndex].files[fileIndex].attachmentsName.splice(attachmentIndex, 1);
+    this.courseObj.chapters[chapterIndex].files[fileIndex].binaryAttachments.splice(attachmentIndex, 1);
   }
 
   deleteFileFromFilesArray(chapterIndex: number, fileIndex: number) {
@@ -174,6 +188,11 @@ export class AddNewCourseComponent implements OnInit {
   }
 
   addFileToFilesArray(chapterIndex: number) {
-    this.courseObj.chapters[chapterIndex].files.push({title: {ar: '', en: ''}, link: '', file: '', attachments: [], attachmentsName: []});
+    this.courseObj.chapters[chapterIndex].files.push({title: {ar: '', en: ''}, link: '', file: '', attachments: [], binaryAttachments: []});
+  }
+
+  private hideError() {
+    this.successOrErrorMsg = '';
+    this.isFormSubmitted = false;
   }
 }

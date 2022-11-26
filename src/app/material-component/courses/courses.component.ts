@@ -67,4 +67,10 @@ export class CoursesComponent implements OnInit {
   changePublishStatus(id: string) {
     this._courseService.changePublishStatus(id).subscribe(console.log, console.error);
   }
+
+    deleteCourse(courseId: any) {
+        this._courseService.deleteCourse(courseId).subscribe((res) => {
+          this.getCourses();
+        }, console.error);
+    }
 }
