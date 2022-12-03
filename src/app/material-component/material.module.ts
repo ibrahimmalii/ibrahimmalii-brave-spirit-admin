@@ -37,6 +37,7 @@ import {InPlaceEditorAllModule} from "@syncfusion/ej2-angular-inplace-editor";
 import { CoursesComponent } from './courses/courses.component';
 import { GridModule } from '@syncfusion/ej2-angular-grids';
 import { AddNewCourseComponent } from './courses/add-new-course/add-new-course.component';
+import { UpdateCourseComponent } from './courses/update-course/update-course.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { AddNewCourseComponent } from './courses/add-new-course/add-new-course.c
     SlideToggleComponent,
     HomeComponent,
     CoursesComponent,
-    AddNewCourseComponent
+    AddNewCourseComponent,
+    UpdateCourseComponent
   ]
 })
 export class MaterialComponentsModule {}

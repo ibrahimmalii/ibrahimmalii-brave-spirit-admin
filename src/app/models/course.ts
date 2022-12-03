@@ -10,6 +10,7 @@ export class Course {
     private discount: number;
     private read_count?: number;
     private published: boolean;
+    private get_free: boolean;
     chapters: Array<Chapter>;
 
     constructor(
@@ -22,6 +23,7 @@ export class Course {
         discount: number,
         chapters: Array<Chapter>,
         published: boolean = false,
+        get_free: boolean = false,
         readCount?: number
     ) {
         this.name = name;
@@ -33,6 +35,7 @@ export class Course {
         this.discount = discount;
         this.chapters = chapters;
         this.published = published;
+        this.get_free = get_free;
         this.read_count = readCount;
     }
 }

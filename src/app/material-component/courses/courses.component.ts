@@ -61,7 +61,7 @@ export class CoursesComponent implements OnInit {
   }
 
   updateCourse(courseId: string) {
-
+    this._router.navigateByUrl(`/update-course/${courseId}`)
   }
 
   changePublishStatus(id: string) {
@@ -72,5 +72,9 @@ export class CoursesComponent implements OnInit {
         this._courseService.deleteCourse(courseId).subscribe((res) => {
           this.getCourses();
         }, console.error);
+    }
+
+    changePaidOrFreeStatus(id: string) {
+      this._courseService.changePaidStatus(id).subscribe(console.log, console.error);
     }
 }

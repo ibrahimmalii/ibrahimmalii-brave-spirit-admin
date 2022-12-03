@@ -90,6 +90,7 @@ export class CourseService {
       price : course.price,
       discount : course.discount,
       published : course.published,
+      get_free : course.get_free,
       chapters : course.chapters,
       images : courseImagesNames
     };
@@ -111,4 +112,7 @@ export class CourseService {
   };
 
 
+    changePaidStatus(id: string) {
+      return this._http.patch(`/${this.modelName}/paidOrFree/${id}`, '');
+    }
 }

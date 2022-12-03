@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Course} from "../../../models/course";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Chapter} from "../../../models/chapter";
 import {PopupSettingsModel} from "@syncfusion/ej2-inplace-editor/src/inplace-editor/base/models-model";
-import {TextBoxModel} from "@syncfusion/ej2-inputs";
 import {CourseService} from "../../../services/course.service";
 import {Router} from "@angular/router";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-add-new-course',
@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
 export class AddNewCourseComponent implements OnInit {
 
   originalChapter: Chapter = new Chapter({ar: '', en: ''}, {ar: '', en: ''}, [{title: {ar: '', en: ''}, link: '', file: '', attachments: [], binaryAttachments: []}]);
-  courseObj: Course = new Course(
+  @Input() courseObj: Course = new Course(
       {ar: '', en: ''},
       {ar: '', en: ''},
       {ar: '', en: ''},
@@ -24,7 +24,8 @@ export class AddNewCourseComponent implements OnInit {
       {euro: 0, dzd: 0},
       0,
       [new Chapter({ar: '', en: ''}, {ar: '', en: ''}, [{title: {ar: '', en: ''}, link: '', file: '', attachments: [], binaryAttachments: []}])],
-      false
+      false,
+      false,
   );
 
   public settings: PopupSettingsModel = {
@@ -161,6 +162,9 @@ export class AddNewCourseComponent implements OnInit {
   fileStep = 0;
   isFormSubmitted: boolean = false;
   successOrErrorMsg: string = '';
+  @Input() isCourseUpdate: boolean = false;
+  publicUrl: string  = environment.baseUrl;
+  @Input() courseId?: string;
 
   setStep(index: number) {
     this.step = index;
@@ -194,5 +198,10 @@ export class AddNewCourseComponent implements OnInit {
   private hideError() {
     this.successOrErrorMsg = '';
     this.isFormSubmitted = false;
+  }
+
+
+  changeCoursePaidOrFreeStatus() {
+    this.courseObj['get_free'] = !this.courseObj['get_free'];
   }
 }

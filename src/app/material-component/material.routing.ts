@@ -19,6 +19,7 @@ import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import {HomeComponent} from "./home/home.component";
 import {CoursesComponent} from "./courses/courses.component";
 import {AddNewCourseComponent} from "./courses/add-new-course/add-new-course.component";
+import {UpdateCourseComponent} from "./courses/update-course/update-course.component";
 
 export const MaterialRoutes: Routes = [
   {
@@ -32,6 +33,10 @@ export const MaterialRoutes: Routes = [
   {
     path: 'add-new-course',
     component: AddNewCourseComponent
+  },
+  {
+    path: 'update-course/:id',
+    component: UpdateCourseComponent
   },
   {
     path: 'button',

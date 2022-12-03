@@ -27,6 +27,13 @@
                 </mat-card-content>
             </ng-template>
         </e-column>
+        <e-column field='get_free' headerText='Get for free' textAlign='Left' width=90>
+            <ng-template #template let-data>
+                <mat-card-content>
+                    <mat-slide-toggle [checked]="data['get_free']" (change)="changePaidOrFreeStatus(data['_id'])"></mat-slide-toggle>
+                </mat-card-content>
+            </ng-template>
+        </e-column>
         <e-column headerText='Actions' textAlign='Center' width=90>
             <ng-template #template let-data>
                 <mat-card-content>
