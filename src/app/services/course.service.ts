@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from "./http.service";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,7 @@ import {HttpService} from "./http.service";
 export class CourseService {
 
   private modelName = 'courses';
-  constructor(private _http: HttpService) { }
+  constructor(private _http: HttpService, private ht: HttpClient) { }
 
   getAllForAdmin()
   {
@@ -28,14 +30,19 @@ export class CourseService {
     return this._http.delete(`/${this.modelName}/`, id)
   }
 
+  // getCourseCover(id: string, fileName: string)
+  // {
+  //   return this._http.get(`/${this.modelName}/cover/${id}/${fileName}`, {}, {responseType : 'blob'})
+  // }
+
   getCourseCover(id: string, fileName: string)
   {
-    return this._http.get(`/${this.modelName}/cover/${id}/${fileName}`)
+    return this.ht.get(`${environment.baseUrl}/courses/cover/${id}/${fileName}`, {responseType : 'blob'})
   }
 
   getCourseImage(id: string, imageName: string)
   {
-    return this._http.get(`/${this.modelName}/cover/${id}/${imageName}`);
+    return this._http.get(`/${this.modelName}/image/${id}/${imageName}`);
   }
 
   showAdminCourse(id: string)
@@ -101,9 +108,56 @@ export class CourseService {
     return this._http.post(`/${this.modelName}`, data, {headers: {...httpConfig}});
   }
 
-  patch(id: string, body: any)
+  patch(id: string | undefined, body: any)
   {
-    return this._http.patch(`/${this.modelName}/${id}`, body);
+    const course = structuredClone(body);
+    console.log(course);
+    // return;
+    const data = new FormData();
+    if(course.cover){
+      data.append('cover', course.cover, course.cover?.name);
+    }
+    course.images.forEach((file: any, index: number) => {
+      if(file.name) {
+        data.append(`image${index + 1}`, file, file?.name);
+      }
+    });
+    course.chapters.forEach((chapter: any, chapterIndex: number) => {
+      chapter.files.forEach((file: any, fileIndex: number) => {
+        file.binaryAttachments.forEach((attachment: any, attachIndex: number) => {
+          if(attachment.name) {
+            data.append(`attachment${chapterIndex}${fileIndex}${attachIndex}`, attachment, attachment?.name)
+          }
+        });
+        delete file.binaryAttachments;
+      });
+    });
+
+    const courseImagesNames = course.images.map((item: any) => {
+      if(!item.name){
+        return item;
+      } else {
+        return item.name
+      }
+    });
+
+    const newCourse = {
+      cover : course?.cover?.name || '',
+      name : course.name,
+      description : course.description,
+      zipped_description : course.zipped_description,
+      price : course.price,
+      discount : course.discount,
+      published : course.published,
+      get_free : course.get_free,
+      chapters : course.chapters,
+      images : courseImagesNames
+    };
+    const courseFile = new Blob([JSON.stringify(newCourse)], {
+      type: 'application/json',
+    });
+    data.append('data', courseFile);
+    return this._http.patch(`/${this.modelName}/${id}`, data);
   }
 
   changePublishStatus(id: string)
@@ -111,8 +165,7 @@ export class CourseService {
     return this._http.patch(`/${this.modelName}/publish/${id}`, '');
   };
 
-
-    changePaidStatus(id: string) {
-      return this._http.patch(`/${this.modelName}/paidOrFree/${id}`, '');
-    }
+  changePaidStatus(id: string) {
+    return this._http.patch(`/${this.modelName}/paidOrFree/${id}`, '');
+  }
 }

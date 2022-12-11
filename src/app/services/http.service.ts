@@ -9,7 +9,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  get(url: string, headerConfig?: object)
+  get(url: string, headerConfig?: object, otherOptions?: object)
   {
     return this.http.get(environment.baseUrl + url, {headers: {...headerConfig}});
   }

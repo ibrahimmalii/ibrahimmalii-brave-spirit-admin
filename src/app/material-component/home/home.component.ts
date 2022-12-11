@@ -345,12 +345,25 @@ export class HomeComponent implements OnInit {
 
   resetDefault() {
     this.isLoaded = false;
-    this._homeService.reset({}).subscribe((res) => {
+    this._homeService.reset().subscribe((res) => {
       this.isLoaded = true;
       this.homeObj = res;
       this.mapSectionsImagesUrls();
     }, console.error, () => {
       this.isLoaded = true;
     });
+  }
+
+  setAsDefault(){
+    if(confirm('It will set all partitions as default and you will not be able to restore them. :)')) {
+      this.isLoaded = false;
+      this.saveHome().then(() => {
+        this._homeService.setAsDefault().subscribe((res) => {
+          this.isLoaded = true;
+        }, console.error, () => {
+          this.isLoaded = true;
+        });
+      })
+    }
   }
 }

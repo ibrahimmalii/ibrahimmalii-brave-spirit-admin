@@ -13,6 +13,7 @@ export class UpdateCourseComponent implements OnInit {
 
   course: any;
   courseId?: string;
+  courseNameForPreview?: string;
   ngOnInit(): void {
     this._activatedRoute.params.subscribe((data) => {
       if(data.id) {
@@ -26,6 +27,7 @@ export class UpdateCourseComponent implements OnInit {
     this._courseService.showAdminCourse(id).subscribe((response)=>{
       // @ts-ignore
       this.course = response['course'];
+      this.courseNameForPreview = this.course['cover'];
       console.log(this.course);
     });
   }

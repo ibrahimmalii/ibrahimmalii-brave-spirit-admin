@@ -18,7 +18,11 @@ export class HomeService {
     return this._httpClient.patch('/home', body, {headers: {...headerConfig}});
   }
 
-    reset(body: any) {
-      return this._httpClient.patch('/home/reset', body);
+    reset() {
+      return this._httpClient.patch('/home/reset', {});
+    }
+
+    setAsDefault() {
+      return this._httpClient.patch('/home/setAsDefault', {});
     }
 }

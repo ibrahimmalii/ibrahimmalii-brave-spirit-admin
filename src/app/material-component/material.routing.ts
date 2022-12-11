@@ -36,7 +36,7 @@ export const MaterialRoutes: Routes = [
   },
   {
     path: 'update-course/:id',
-    component: UpdateCourseComponent
+    component: AddNewCourseComponent
   },
   {
     path: 'button',

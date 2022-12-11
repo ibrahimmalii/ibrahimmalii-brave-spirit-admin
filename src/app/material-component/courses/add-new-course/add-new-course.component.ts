@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Chapter} from "../../../models/chapter";
 import {PopupSettingsModel} from "@syncfusion/ej2-inplace-editor/src/inplace-editor/base/models-model";
 import {CourseService} from "../../../services/course.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 
 @Component({
@@ -15,7 +15,7 @@ import {environment} from "../../../../environments/environment";
 export class AddNewCourseComponent implements OnInit {
 
   originalChapter: Chapter = new Chapter({ar: '', en: ''}, {ar: '', en: ''}, [{title: {ar: '', en: ''}, link: '', file: '', attachments: [], binaryAttachments: []}]);
-  @Input() courseObj: Course = new Course(
+  courseObj: Course = new Course(
       {ar: '', en: ''},
       {ar: '', en: ''},
       {ar: '', en: ''},
@@ -24,6 +24,7 @@ export class AddNewCourseComponent implements OnInit {
       {euro: 0, dzd: 0},
       0,
       [new Chapter({ar: '', en: ''}, {ar: '', en: ''}, [{title: {ar: '', en: ''}, link: '', file: '', attachments: [], binaryAttachments: []}])],
+      '',
       false,
       false,
   );
@@ -43,6 +44,7 @@ export class AddNewCourseComponent implements OnInit {
 
   // About form
   myForm: FormGroup = new FormGroup<any>({});
+  isLoaded: boolean = false;
 
   get f(){
     return this.myForm.controls;
@@ -69,9 +71,22 @@ export class AddNewCourseComponent implements OnInit {
   }
 
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private _courseService: CourseService, private _router: Router) { }
+  constructor(private fb: FormBuilder,
+              private cdr: ChangeDetectorRef,
+              private _courseService: CourseService,
+              private _router: Router,
+              private _activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    this._activatedRoute.params.subscribe((data) => {
+      if(data.id) {
+        this.isCourseUpdate = true;
+        this.getCourseDetails(data.id);
+      }
+    })
+
+    console.log(this.courseObj);
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       file: ['', [Validators.required]],
@@ -101,6 +116,7 @@ export class AddNewCourseComponent implements OnInit {
   changeImage(event:any,  isChapter: boolean = false, chapterIndex:number = 0, fileIndex: number = 0) {
     let reader = new FileReader();
     let file = event.target.files[0];
+    console.log('file above', file);
     if (event.target.files && event.target.files[0]) {
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -142,29 +158,44 @@ export class AddNewCourseComponent implements OnInit {
   }
 
   addNewCourse() {
+    this.isLoaded = true;
+    if(this.isCourseUpdate){
+      this.updateCourse();
+      return;
+    }
     this._courseService.add(this.courseObj).subscribe((res) => {
-      this.successOrErrorMsg = 'Course added successfully';
       this.isFormSubmitted = true;
+      this.successOrErrorMsg = 'Course added successfully';
       setTimeout(() => {
         this.hideError();
         this._router.navigateByUrl('/courses');
       }, 3000);
     }, (err) => {
-      this.successOrErrorMsg = err.error.error;
-      this.isFormSubmitted = true;
-      setTimeout(() => {
-        this.hideError();
-      }, 3000);
+      this.handleResError(err);
+      this.isLoaded = false;
     });
+  }
+
+  updateCourse() {
+    this._courseService.patch(this.courseObj['_id'], this.courseObj)
+        .subscribe((res) => {
+          this.successOrErrorMsg = 'Course updated successfully';
+          this.isFormSubmitted = true;
+          setTimeout(() => {
+            this.hideError();
+            this._router.navigateByUrl('/courses');
+          }, 3000);
+        }, (err) => {
+          this.handleResError(err);
+        });
   }
 
   step = 0;
   fileStep = 0;
   isFormSubmitted: boolean = false;
   successOrErrorMsg: string = '';
-  @Input() isCourseUpdate: boolean = false;
+  isCourseUpdate: boolean = false;
   publicUrl: string  = environment.baseUrl;
-  @Input() courseId?: string;
 
   setStep(index: number) {
     this.step = index;
@@ -198,10 +229,65 @@ export class AddNewCourseComponent implements OnInit {
   private hideError() {
     this.successOrErrorMsg = '';
     this.isFormSubmitted = false;
+    this.isLoaded = false;
   }
 
 
   changeCoursePaidOrFreeStatus() {
     this.courseObj['get_free'] = !this.courseObj['get_free'];
+  }
+
+  getCourseDetails(id: string){
+    this.isLoaded = true;
+    this._courseService.showAdminCourse(id).subscribe((response)=>{
+      // @ts-ignore
+      this.courseObj = response['course'];
+      this.courseCoverForm.controls.courseCover.setValidators([]);
+      this.courseObj.chapters.forEach((chapter: any, chapterIndex: number) => {
+        chapter.files.forEach((file: any, fileIndex: number) => {
+          file.binaryAttachments = [];
+        });
+      });
+      this.courseNameForPreview = this.courseObj['cover'];
+      this._courseService.getCourseCover(id, this.courseNameForPreview).subscribe((res) => {
+        const file = new File([res], this.courseNameForPreview, {type: 'image/png', lastModified: Date.now()});
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            this.courseCoverForPreview = reader.result;
+            this.courseNameForPreview = file.name;
+            this.courseObj['cover'] = file;
+        }
+        this.cdr.markForCheck();
+        this.courseCoverForm.patchValue({courseCover: file});
+
+      }, (error) => {
+        this.courseCoverForPreview = error['url'];
+      });
+
+      this.courseObj['images'].forEach((img: string) => {
+        this.getCourseImage(id, img);
+      })
+      
+      this.isLoaded = false;
+    }, (error) => {
+      this.isLoaded = false;
+    });
+  }
+
+  getCourseImage(id: string, imgName: string)
+  {
+    this._courseService.getCourseImage(id, imgName).subscribe(console.log, (error) => {
+      console.log('error', error);
+      this.courseImagesForPreview.push(error['url']);
+    });
+  }
+
+  private handleResError(err: any) {
+    this.successOrErrorMsg = err.error.error;
+    this.isFormSubmitted = true;
+    setTimeout(() => {
+      this.hideError();
+    }, 3000);
   }
 }

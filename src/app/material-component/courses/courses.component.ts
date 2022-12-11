@@ -69,9 +69,11 @@ export class CoursesComponent implements OnInit {
   }
 
     deleteCourse(courseId: any) {
+      if(confirm('Are you sure?')) {
         this._courseService.deleteCourse(courseId).subscribe((res) => {
           this.getCourses();
         }, console.error);
+      }
     }
 
     changePaidOrFreeStatus(id: string) {
