@@ -1,0 +1,51 @@
+<app-module-title
+        name="Subscriptions"
+        btnTitle="Subscription"
+        [isAddAvailable]="false"
+        (addNew)="addNewSubscription()"
+></app-module-title>
+<ejs-grid *ngIf="isLoaded"
+          #grid id='Grid'
+          #gridEleRef
+          (toolbarClick)='toolbarClick($event)'
+          [dataSource]='modifiedSubscriptions'
+          [allowPaging]="true"
+          [pageSettings]='pageSettings'
+          [allowSorting]="true"
+          [allowFiltering]="true"
+          [allowGrouping]="true"
+          [toolbar]='toolbarOptions'
+          [allowExcelExport]='true'
+          [allowPdfExport]='true'
+          (excelExportComplete)='excelExportComplete()'
+          (pdfExportComplete)='pdfExportComplete()'
+>
+    <e-columns>
+        <e-column field='firstname' headerText='First Name' textAlign='Left' width=90></e-column>
+        <e-column field='lastname' headerText='Last Name' textAlign='Left' width=90></e-column>
+        <e-column field='email' headerText='Email' width=120></e-column>
+        <e-column field='phone' headerText='Phone' textAlign='Left' width=90></e-column>
+        <e-column field='gender' headerText='Gender' textAlign='Left'  width=90></e-column>
+        <e-column field='active' headerText='Is Active' textAlign='Left' width=90>
+            <ng-template #template let-data>
+                <mat-card-content>
+                    <mat-slide-toggle [checked]="data['active']" (change)="getActivationStatues(data['_id'])"></mat-slide-toggle>
+                </mat-card-content>
+            </ng-template>
+        </e-column>
+        <e-column headerText='Actions' textAlign='Center' width=90>
+            <ng-template #template let-data>
+                <mat-card-content>
+                    <button mat-stroked-button color="primary" (click)="updateUser(data['_id'])">Update</button>
+                    <!--                    <button mat-stroked-button color="warn" class="me-2">Delete</button>-->
+                </mat-card-content>
+            </ng-template>
+        </e-column>
+    </e-columns>
+</ejs-grid>
+
+<mat-card *ngIf="!isLoaded" >
+    <mat-card-content >
+        <mat-spinner class="mx-auto"></mat-spinner>
+    </mat-card-content>
+</mat-card>

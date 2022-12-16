@@ -9,9 +9,10 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  get(url: string, headerConfig?: object, otherOptions?: object)
+  get(url: string, headerConfig?: any, otherOptions?: object)
   {
-    return this.http.get(environment.baseUrl + url, {headers: {...headerConfig}});
+    console.log('before log');
+    return this.http.get(environment.baseUrl + url, {headers: {...headerConfig}, ...otherOptions});
   }
 
   post(url: string, body: any, headerConfig?: object)

@@ -4,21 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87f2e22d-f8aa-4ec1-9089-a148685d3358" name="Changes" comment="add paid or free option for courses.">
+    <list default="true" id="87f2e22d-f8aa-4ec1-9089-a148685d3358" name="Changes" comment="Complete course update and add with home.">
+      <change afterPath="$PROJECT_DIR$/src/app/material-component/subscripitons/subscriptions.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/material-component/subscripitons/subscriptions.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/material-component/subscripitons/subscriptions.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/services/subscription.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.angular/cache/14.0.7/angular-webpack/1f08931b390366aeb0fe701c76196bd346e76e00/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.angular/cache/14.0.7/angular-webpack/1f08931b390366aeb0fe701c76196bd346e76e00/0.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.angular/cache/14.0.7/angular-webpack/1f08931b390366aeb0fe701c76196bd346e76e00/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.angular/cache/14.0.7/angular-webpack/1f08931b390366aeb0fe701c76196bd346e76e00/index.pack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/material-component/courses/add-new-course/add-new-course.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/courses/add-new-course/add-new-course.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/material-component/courses/add-new-course/add-new-course.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/courses/add-new-course/add-new-course.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/material-component/courses/courses.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/courses/courses.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/material-component/courses/update-course/update-course.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/courses/update-course/update-course.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/material-component/courses/update-course/update-course.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/courses/update-course/update-course.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/material-component/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/home/home.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/material-component/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/home/home.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/material-component/material.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/material.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/material-component/material.routing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/material.routing.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/models/course.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/models/course.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/services/course.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/course.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/home.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/home.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/services/http.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/http.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/menu-items/menu-items.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/menu-items/menu-items.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/module-title/module-title.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/module-title/module-title.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/module-title/module-title.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/module-title/module-title.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +114,9 @@
       <workItem from="1670067189190" duration="2054000" />
       <workItem from="1670264864039" duration="16846000" />
       <workItem from="1670682956264" duration="3179000" />
-      <workItem from="1670785315069" duration="15682000" />
+      <workItem from="1670785315069" duration="15843000" />
+      <workItem from="1670887188753" duration="111000" />
+      <workItem from="1671197336967" duration="7690000" />
     </task>
     <task id="LOCAL-00001" summary="init files.">
       <created>1663537139930</created>
@@ -262,7 +265,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670069470676</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Complete course update and add with home.">
+      <created>1670803037313</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1670803037313</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Complete course update and add with home.">
+      <created>1670803111483</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1670803111483</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,6 +307,7 @@
     <MESSAGE value="init files." />
     <MESSAGE value="complete add new course." />
     <MESSAGE value="add paid or free option for courses." />
-    <option name="LAST_COMMIT_MESSAGE" value="add paid or free option for courses." />
+    <MESSAGE value="Complete course update and add with home." />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete course update and add with home." />
   </component>
 </project>

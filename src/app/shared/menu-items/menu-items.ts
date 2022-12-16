@@ -11,6 +11,7 @@ const MENUITEMS = [
   { state: 'dashboard', name: 'Users', type: 'link', icon: 'people' },
   { state: 'home', name: 'Home', type: 'link', icon: 'home' },
   { state: 'courses', name: 'Courses', type: 'link', icon: 'school' },
+  { state: 'subscriptions', name: 'Subscriptions', type: 'link', icon: 'money' },
   { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },
   { state: 'grid', type: 'link', name: 'Grid List', icon: 'view_comfy' },
   { state: 'lists', type: 'link', name: 'Lists', icon: 'view_list' },

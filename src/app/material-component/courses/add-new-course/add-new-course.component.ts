@@ -86,7 +86,6 @@ export class AddNewCourseComponent implements OnInit {
       }
     })
 
-    console.log(this.courseObj);
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       file: ['', [Validators.required]],
@@ -116,7 +115,6 @@ export class AddNewCourseComponent implements OnInit {
   changeImage(event:any,  isChapter: boolean = false, chapterIndex:number = 0, fileIndex: number = 0) {
     let reader = new FileReader();
     let file = event.target.files[0];
-    console.log('file above', file);
     if (event.target.files && event.target.files[0]) {
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -249,7 +247,7 @@ export class AddNewCourseComponent implements OnInit {
         });
       });
       this.courseNameForPreview = this.courseObj['cover'];
-      this._courseService.getCourseCover(id, this.courseNameForPreview).subscribe((res) => {
+      this._courseService.getCourseCover(id, this.courseNameForPreview).subscribe((res:any) => {
         const file = new File([res], this.courseNameForPreview, {type: 'image/png', lastModified: Date.now()});
         let reader = new FileReader();
         reader.readAsDataURL(file);
@@ -259,8 +257,6 @@ export class AddNewCourseComponent implements OnInit {
             this.courseObj['cover'] = file;
         }
         this.cdr.markForCheck();
-        this.courseCoverForm.patchValue({courseCover: file});
-
       }, (error) => {
         this.courseCoverForPreview = error['url'];
       });
@@ -277,8 +273,7 @@ export class AddNewCourseComponent implements OnInit {
 
   getCourseImage(id: string, imgName: string)
   {
-    this._courseService.getCourseImage(id, imgName).subscribe(console.log, (error) => {
-      console.log('error', error);
+    this._courseService.getCourseImage(id, imgName).subscribe(() => {}, (error) => {
       this.courseImagesForPreview.push(error['url']);
     });
   }

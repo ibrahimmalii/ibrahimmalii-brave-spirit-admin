@@ -8,6 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class ModuleTitleComponent implements OnInit {
   @Input() name?: string;
   @Input() btnTitle?: string;
+  @Input() isAddAvailable?: boolean = true;
   @Output() addNew: EventEmitter<any> = new EventEmitter();
 
   constructor() { }

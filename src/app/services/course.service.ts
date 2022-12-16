@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from "./http.service";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +7,7 @@ import {environment} from "../../environments/environment";
 export class CourseService {
 
   private modelName = 'courses';
-  constructor(private _http: HttpService, private ht: HttpClient) { }
+  constructor(private _http: HttpService) { }
 
   getAllForAdmin()
   {
@@ -30,14 +28,9 @@ export class CourseService {
     return this._http.delete(`/${this.modelName}/`, id)
   }
 
-  // getCourseCover(id: string, fileName: string)
-  // {
-  //   return this._http.get(`/${this.modelName}/cover/${id}/${fileName}`, {}, {responseType : 'blob'})
-  // }
-
   getCourseCover(id: string, fileName: string)
   {
-    return this.ht.get(`${environment.baseUrl}/courses/cover/${id}/${fileName}`, {responseType : 'blob'})
+    return this._http.get(`/${this.modelName}/cover/${id}/${fileName}`, {}, {responseType : 'blob'})
   }
 
   getCourseImage(id: string, imageName: string)
@@ -111,8 +104,6 @@ export class CourseService {
   patch(id: string | undefined, body: any)
   {
     const course = structuredClone(body);
-    console.log(course);
-    // return;
     const data = new FormData();
     if(course.cover){
       data.append('cover', course.cover, course.cover?.name);
