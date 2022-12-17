@@ -14,4 +14,19 @@ export class SubscriptionService {
     return this._http.get(`/${this.modelName}`);
   }
 
+    getRequests() {
+      return this._http.get(`/${this.modelName}/requests`);
+    }
+
+  getProofFile(id: string) {
+    return this._http.get(`/${this.modelName}/proof/${id}`);
+  }
+
+  approve(id: string) {
+    return this._http.get(`/${this.modelName}/confirm/${id}`);
+  }
+
+  decline(id: string) {
+    return this._http.get(`/${this.modelName}/decline/${id}`);
+  }
 }

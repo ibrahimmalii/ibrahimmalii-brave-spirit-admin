@@ -1,1 +1,51 @@
-<p>requests works!</p>
+<app-module-title
+        name="Requests"
+        [isAddAvailable]="false"
+></app-module-title>
+<ejs-grid *ngIf="isLoaded"
+          #grid id='Grid'
+          #gridEleRef
+          (toolbarClick)='toolbarClick($event)'
+          [dataSource]='modifiedRequests'
+          [allowPaging]="true"
+          [pageSettings]='pageSettings'
+          [allowSorting]="true"
+          [allowFiltering]="true"
+          [allowGrouping]="true"
+          [toolbar]='toolbarOptions'
+          [allowExcelExport]='true'
+          [allowPdfExport]='true'
+          (excelExportComplete)='excelExportComplete()'
+          (pdfExportComplete)='pdfExportComplete()'
+>
+    <e-columns>
+        <e-column field='course.name.ar' headerText='Course Name' textAlign='Left' width=90></e-column>
+        <e-column field='user.email' headerText='Email' textAlign='Left' width=90></e-column>
+        <e-column field='request.type' headerText='Type' textAlign='Left' width=90></e-column>
+        <e-column field='request.file' headerText='Attachment And Reasons' textAlign='Left' width=90>
+            <ng-template #template let-data>
+                <mat-card-content *ngIf="data.request.file">
+                    <a [href]="proofLink + data['_id']" target="_blank">Attach</a>
+                </mat-card-content>
+                <mat-card-content *ngIf="data.request.reason">
+                    {{data.request.reason}}
+                </mat-card-content>
+            </ng-template>
+        </e-column>
+        <e-column field='state' headerText='State' width=120></e-column>
+        <e-column headerText='Actions' textAlign='Center' width=90>
+            <ng-template #template let-data>
+                <mat-card-content>
+                    <button mat-stroked-button color="primary" (click)="approveRequest(data['_id'])" [disabled]="data['state'] === 'declined'">Approve</button>
+                    <button mat-stroked-button color="warn" class="me-2" (click)="declineRequest(data['_id'])" [disabled]="data['state'] === 'declined'">Decline</button>
+                </mat-card-content>
+            </ng-template>
+        </e-column>
+    </e-columns>
+</ejs-grid>
+
+<mat-card *ngIf="!isLoaded" >
+    <mat-card-content >
+        <mat-spinner class="mx-auto"></mat-spinner>
+    </mat-card-content>
+</mat-card>
