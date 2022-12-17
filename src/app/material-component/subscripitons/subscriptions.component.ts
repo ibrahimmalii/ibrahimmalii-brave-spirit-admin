@@ -1,9 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ColumnMenuClickEventArgs, GridComponent, PageSettingsModel, ToolbarItems} from "@syncfusion/ej2-angular-grids";
-import {MatDialog} from "@angular/material/dialog";
-import {
-  AddUserDialogComponent
-} from "../../dashboard/dashboard-components/users/add-user-dialog/add-user-dialog.component";
 import {SubscriptionService} from "../../services/subscription.service";
 
 @Component({
@@ -21,7 +17,7 @@ export class SubscriptionsComponent implements OnInit {
   @ViewChild('grid')
   public grid!: GridComponent;
 
-  constructor(private _subscriptionService: SubscriptionService, public dialog: MatDialog) { }
+  constructor(private _subscriptionService: SubscriptionService) { }
 
   ngOnInit(): void {
     this.getAllSubscriptions();
@@ -31,10 +27,7 @@ export class SubscriptionsComponent implements OnInit {
     this._subscriptionService.getAll().subscribe(res => {
       this.originalSubscriptions = res;
       console.log(res);
-      // this.modifiedSubscriptions = structuredClone(this.originalSubscriptions).map((item: any) => {
-      //   item['gender'] = item['gender'] === 1 ? 'Female' : 'Male';
-      //   return item;
-      // });
+      this.modifiedSubscriptions = structuredClone(this.originalSubscriptions);
     }, (err) => {
       console.error(err);
       this.isLoaded = true;
@@ -55,33 +48,6 @@ export class SubscriptionsComponent implements OnInit {
         // this.grid.excelExport().then(console.log);
       }
     }
-  }
-
-  getActivationStatues(id: string) {
-
-  }
-
-  addNewSubscription() {
-    this.openDialog()
-  }
-
-  openDialog() {
-    const dialogRef = this.dialog.open(AddUserDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.getAllSubscriptions();
-    });
-  }
-
-  updateUser(id: string) {
-    const dialogRef = this.dialog.open(AddUserDialogComponent, {
-      data: {id}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('res => ',result)
-      this.getAllSubscriptions();
-    });
   }
 
   pdfExportComplete(): void {

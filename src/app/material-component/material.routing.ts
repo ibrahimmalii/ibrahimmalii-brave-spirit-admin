@@ -21,6 +21,7 @@ import {CoursesComponent} from "./courses/courses.component";
 import {AddNewCourseComponent} from "./courses/add-new-course/add-new-course.component";
 import {UpdateCourseComponent} from "./courses/update-course/update-course.component";
 import {SubscriptionsComponent} from "./subscripitons/subscriptions.component";
+import {RequestsComponent} from "./requests/requests.component";
 
 export const MaterialRoutes: Routes = [
   {
@@ -34,6 +35,10 @@ export const MaterialRoutes: Routes = [
   {
     path: 'subscriptions',
     component: SubscriptionsComponent
+  },
+  {
+    path: 'requests',
+    component: RequestsComponent
   },
   {
     path: 'add-new-course',
