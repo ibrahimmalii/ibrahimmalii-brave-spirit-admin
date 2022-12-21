@@ -64,10 +64,22 @@ export class RequestsComponent implements OnInit {
   }
 
   approveRequest(id: string) {
-    this._subscriptionService.approve(id).subscribe(console.log, console.error);
+    if(confirm('Are you sure you want to approve?')) {
+      this._subscriptionService.approve(id).subscribe((res) => {
+        this.getAllRequests();
+      }, console.error);
+    }
   }
 
   declineRequest(id: string) {
-    this._subscriptionService.decline(id).subscribe(console.log, console.error);
+    if(confirm('Are you sure you want to decline?')) {
+      this._subscriptionService.decline(id).subscribe((res) => {
+        this.getAllRequests();
+      }, console.error);
+    }
+  }
+
+  showDetails(id: string) {
+    // TODO from here tomorrow.
   }
 }

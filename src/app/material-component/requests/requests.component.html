@@ -28,7 +28,9 @@
                     <a [href]="proofLink + data['_id']" target="_blank">Attach</a>
                 </mat-card-content>
                 <mat-card-content *ngIf="data.request.reason">
-                    {{data.request.reason}}
+                    <span class="mt-3">
+                        {{data.request.reason}}
+                    </span>
                 </mat-card-content>
             </ng-template>
         </e-column>
@@ -38,6 +40,7 @@
                 <mat-card-content>
                     <button mat-stroked-button color="primary" (click)="approveRequest(data['_id'])" [disabled]="data['state'] === 'declined'">Approve</button>
                     <button mat-stroked-button color="warn" class="me-2" (click)="declineRequest(data['_id'])" [disabled]="data['state'] === 'declined'">Decline</button>
+                    <button mat-stroked-button color="warn" class="me-2" (click)="showDetails(data['_id'])">Details</button>
                 </mat-card-content>
             </ng-template>
         </e-column>
