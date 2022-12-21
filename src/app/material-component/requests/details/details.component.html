@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Subscription details</h2>
+<mat-dialog-content class="mat-typography" *ngIf="isLoaded">
+        <div class="field-container d-flex">
+            <mat-form-field><input disabled  matInput placeholder="User Email" [value]="user.email"> </mat-form-field>
+            <mat-form-field><input disabled  matInput placeholder="User First Name" [value]="user.firstname">  </mat-form-field>
+            <mat-form-field><input disabled  matInput placeholder="User Price (DZD)" [value]="user.lastname">  </mat-form-field>
+        </div>
+        <div class="field-container d-flex">
+            <mat-form-field><input disabled  matInput placeholder="Course Name" [value]="course.name.ar"> </mat-form-field>
+            <mat-form-field><input disabled  matInput placeholder="Course Price (EURO)" [value]="course.price.euro"></mat-form-field>
+            <mat-form-field><input disabled  matInput placeholder="Course Price (DZD)" [value]="course.price.dzd"></mat-form-field>
+        </div>
+
+    <h4>Request type: '{{subscription.request.type}}'</h4>
+    <span *ngIf="subscription['request']['file']">
+        Attachment file:
+        <a [href]="proofLink + subscription['_id']" target="_blank">
+            <button mat-icon-button color="primary">
+                <mat-icon aria-label="Example icon-button with a heart icon">attachment</mat-icon>
+            </button>
+        </a>
+    </span>
+    <mat-form-field *ngIf="subscription['request']['reason']"><textarea disabled matInput placeholder="Request Reason" [value]="subscription['request']['reason']"></textarea> </mat-form-field>
+</mat-dialog-content>
+
+<mat-card *ngIf="!isLoaded" >
+    <mat-card-content >
+        <mat-spinner class="mx-auto"></mat-spinner>
+    </mat-card-content>
+</mat-card>

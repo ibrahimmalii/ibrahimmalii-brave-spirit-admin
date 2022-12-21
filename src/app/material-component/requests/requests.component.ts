@@ -1,7 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {ColumnMenuClickEventArgs, GridComponent, PageSettingsModel, ToolbarItems} from "@syncfusion/ej2-angular-grids";
 import {SubscriptionService} from "../../services/subscription.service";
 import {environment} from "../../../environments/environment";
+import {DetailsComponent} from "./details/details.component";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-requests',
@@ -19,7 +21,8 @@ export class RequestsComponent implements OnInit {
   public grid!: GridComponent;
   proofLink: string = environment.baseUrl + '/subscriptions/proof/';
 
-  constructor(private _subscriptionService: SubscriptionService) { }
+  constructor(private _subscriptionService: SubscriptionService, public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.getAllRequests();
@@ -81,5 +84,17 @@ export class RequestsComponent implements OnInit {
 
   showDetails(id: string) {
     // TODO from here tomorrow.
+    this.openDialog(id);
+  }
+
+  openDialog(id:string) {
+    const dialogRef = this.dialog.open(DetailsComponent, {
+      data: {id},
+      width: '1200px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }

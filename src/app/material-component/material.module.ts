@@ -38,8 +38,9 @@ import { CoursesComponent } from './courses/courses.component';
 import { GridModule } from '@syncfusion/ej2-angular-grids';
 import { AddNewCourseComponent } from './courses/add-new-course/add-new-course.component';
 import { UpdateCourseComponent } from './courses/update-course/update-course.component';
-import { SubscriptionsComponent } from './subscripitons/subscriptions.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { RequestsComponent } from './requests/requests.component';
+import { DetailsComponent } from './requests/details/details.component';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { RequestsComponent } from './requests/requests.component';
     AddNewCourseComponent,
     UpdateCourseComponent,
     SubscriptionsComponent,
-    RequestsComponent
+    RequestsComponent,
+    DetailsComponent
   ]
 })
 export class MaterialComponentsModule {}

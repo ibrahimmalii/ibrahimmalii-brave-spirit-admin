@@ -20,7 +20,7 @@ import {HomeComponent} from "./home/home.component";
 import {CoursesComponent} from "./courses/courses.component";
 import {AddNewCourseComponent} from "./courses/add-new-course/add-new-course.component";
 import {UpdateCourseComponent} from "./courses/update-course/update-course.component";
-import {SubscriptionsComponent} from "./subscripitons/subscriptions.component";
+import {SubscriptionsComponent} from "./subscriptions/subscriptions.component";
 import {RequestsComponent} from "./requests/requests.component";
 
 export const MaterialRoutes: Routes = [

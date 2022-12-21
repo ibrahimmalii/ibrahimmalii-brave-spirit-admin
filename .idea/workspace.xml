@@ -4,12 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87f2e22d-f8aa-4ec1-9089-a148685d3358" name="Changes" comment="Show all requests.">
+    <list default="true" id="87f2e22d-f8aa-4ec1-9089-a148685d3358" name="Changes" comment="update in subscriptions and courses process.">
+      <change afterPath="$PROJECT_DIR$/src/app/material-component/requests/details/details.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/material-component/requests/details/details.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/material-component/subscriptions/subscriptions.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.angular/cache/14.0.7/angular-webpack/1f08931b390366aeb0fe701c76196bd346e76e00/0.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.angular/cache/14.0.7/angular-webpack/1f08931b390366aeb0fe701c76196bd346e76e00/0.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.angular/cache/14.0.7/angular-webpack/1f08931b390366aeb0fe701c76196bd346e76e00/index.pack" beforeDir="false" afterPath="$PROJECT_DIR$/.angular/cache/14.0.7/angular-webpack/1f08931b390366aeb0fe701c76196bd346e76e00/index.pack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/material-component/material.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/material.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/material-component/material.routing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/material.routing.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/material-component/requests/requests.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/requests/requests.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/material-component/requests/requests.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/requests/requests.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/material-component/subscripitons/subscriptions.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/requests/details/details.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/material-component/subscripitons/subscriptions.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/subscriptions/subscriptions.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/material-component/subscripitons/subscriptions.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/material-component/subscriptions/subscriptions.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/services/subscription.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/subscription.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/menu-items/menu-items.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/menu-items/menu-items.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +70,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/app/models" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/material-component/requests" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -109,7 +122,8 @@
       <workItem from="1671197336967" duration="13130000" />
       <workItem from="1671291131829" duration="245000" />
       <workItem from="1671301790421" duration="8471000" />
-      <workItem from="1671571007263" duration="6013000" />
+      <workItem from="1671571007263" duration="6057000" />
+      <workItem from="1671654758069" duration="7746000" />
     </task>
     <task id="LOCAL-00001" summary="init files.">
       <created>1663537139930</created>
@@ -293,7 +307,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671311337799</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="update in subscriptions and courses process.">
+      <created>1671586461536</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1671586461536</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,6 +346,7 @@
     <MESSAGE value="Start at subscriptions module." />
     <MESSAGE value="Add requests components." />
     <MESSAGE value="Show all requests." />
-    <option name="LAST_COMMIT_MESSAGE" value="Show all requests." />
+    <MESSAGE value="update in subscriptions and courses process." />
+    <option name="LAST_COMMIT_MESSAGE" value="update in subscriptions and courses process." />
   </component>
 </project>
